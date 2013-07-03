@@ -7,14 +7,14 @@
       <Type>complex</Type>
     </Element>
     <Element>
-      <Name>Components</Name>
+      <Name>Component</Name>
       <Type>complexlist</Type>
-      <Param>Component</Param>
+      <Param>components</Param>
     </Element>
     <Element>
-      <Name>Features</Name>
+      <Name>Feature</Name>
       <Type>complexlist</Type>
-      <Param>Feature</Param>
+      <Param>features</Param>
     </Element>
     <Element>
       <Name>Orthplan</Name>
@@ -40,16 +40,16 @@
       <Type>string</Type>
     </Element>
     <Element>
-      <Name>Createdtime</Name>
+      <Name>CreatedTime</Name>
       <Type>timestamp</Type>
     </Element>
     <Element>
-      <Name>Modifiedtime</Name>
+      <Name>ModifiedTime</Name>
       <Type>complex</Type>
     </Element>
   </Group>
   <Group>
-    <Name>Modifiedtime</Name>
+    <Name>ModifiedTime</Name>
     <Element>
       <Name>Component</Name>
       <Type>timestamp</Type>
