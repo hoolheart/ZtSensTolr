@@ -1,10 +1,10 @@
 #ifndef TOLRDATA_H
 #define TOLRDATA_H
 #include <QStringList>
-#include <QDateTime>
-#include "ZtTable.h"
 #include <QXmlStreamReader>
 #include <QXmlStreamWriter>
+#include <QDateTime>
+#include "ZtTable.h"
 
 class Project;
 class Info;

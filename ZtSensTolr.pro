@@ -13,8 +13,16 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    tolrdata.cpp \
+    ZtTable.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    tolrdata.h \
+    ZtTable.h
 
 FORMS    += mainwindow.ui
+
+OTHER_FILES += \
+    README.md \
+    tolrdata.xml
