@@ -8,13 +8,14 @@ Orthplan::~Orthplan()
 
 void Orthplan::cleanAll()
 {
-    components.clearAll();
-    features.clearAll();
+    components.cleanAll();
+    features.cleanAll();
     status.clear();
 }
 
-bool Orthplan::load(QXmlStreamReader &reader)
+bool Orthplan::loadXml(QXmlStreamReader &reader)
 {
+    bool flag0=false; bool flag1=false;
     cleanAll();
 
     if(reader.isEndElement()) return false;
@@ -24,7 +25,7 @@ bool Orthplan::load(QXmlStreamReader &reader)
             if(reader.name()=="Components") {
                 if(flag0) {flag0=false;break;}
                 flag0=true;
-                if(!components.load(reader)) {
+                if(!components.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -33,7 +34,7 @@ bool Orthplan::load(QXmlStreamReader &reader)
             else if(reader.name()=="Features") {
                 if(flag1) {flag1=false;break;}
                 flag1=true;
-                if(!features.load(reader)) {
+                if(!features.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -50,18 +51,20 @@ bool Orthplan::load(QXmlStreamReader &reader)
         else reader.readNext();
     }
 
-    return true;
+    if(flag0&&flag1)
+        return true;
+    else {cleanAll(); return false;}
 }
 
-void Orthplan::save(QXmlStreamWriter &writer)
+void Orthplan::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("Orthplan");
 
     writer.writeStartElement("Components");
-    components.save(writer);
+    components.saveXml(writer);
     writer.writeEndElement();
     writer.writeStartElement("Features");
-    features.save(writer);
+    features.saveXml(writer);
     writer.writeEndElement();
     for(int i=0;i<status.length();i++)
         writer.writeTextElement("Status", status[i]?"True":"False");
@@ -83,7 +86,7 @@ void Feature::cleanAll()
     description="";
 }
 
-bool Feature::load(QXmlStreamReader &reader)
+bool Feature::loadXml(QXmlStreamReader &reader)
 {
     bool flag0=false; bool flag1=false; bool flag2=false;
     bool flag3=false;
@@ -127,7 +130,7 @@ bool Feature::load(QXmlStreamReader &reader)
     else {cleanAll(); return false;}
 }
 
-void Feature::save(QXmlStreamWriter &writer)
+void Feature::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("Feature");
 
@@ -154,7 +157,7 @@ void Component::cleanAll()
     description="";
 }
 
-bool Component::load(QXmlStreamReader &reader)
+bool Component::loadXml(QXmlStreamReader &reader)
 {
     bool flag0=false; bool flag1=false; bool flag2=false;
     bool flag3=false; bool flag4=false;
@@ -204,7 +207,7 @@ bool Component::load(QXmlStreamReader &reader)
     else {cleanAll(); return false;}
 }
 
-void Component::save(QXmlStreamWriter &writer)
+void Component::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("Component");
 
@@ -227,8 +230,10 @@ void ModifiedTime::cleanAll()
 {
 }
 
-bool ModifiedTime::load(QXmlStreamReader &reader)
+bool ModifiedTime::loadXml(QXmlStreamReader &reader)
 {
+    bool flag0=false; bool flag1=false; bool flag2=false;
+    bool flag3=false;
     cleanAll();
 
     if(reader.isEndElement()) return false;
@@ -264,10 +269,12 @@ bool ModifiedTime::load(QXmlStreamReader &reader)
         else reader.readNext();
     }
 
-    return true;
+    if(flag0&&flag1&&flag2&&flag3)
+        return true;
+    else {cleanAll(); return false;}
 }
 
-void ModifiedTime::save(QXmlStreamWriter &writer)
+void ModifiedTime::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("ModifiedTime");
 
@@ -290,13 +297,13 @@ void Info::cleanAll()
     name="";
     team="";
     description="";
-    modifiedtime.clearAll();
+    modifiedtime.cleanAll();
 }
 
-bool Info::load(QXmlStreamReader &reader)
+bool Info::loadXml(QXmlStreamReader &reader)
 {
     bool flag0=false; bool flag1=false; bool flag2=false;
-    bool flag4=false;
+    bool flag3=false; bool flag4=false;
     cleanAll();
 
     if(reader.isEndElement()) return false;
@@ -330,7 +337,7 @@ bool Info::load(QXmlStreamReader &reader)
             else if(reader.name()=="ModifiedTime") {
                 if(flag4) {flag4=false;break;}
                 flag4=true;
-                if(!modifiedtime.load(reader)) {
+                if(!modifiedtime.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -341,12 +348,12 @@ bool Info::load(QXmlStreamReader &reader)
         else reader.readNext();
     }
 
-    if(flag0&&flag1&&flag2&&flag4)
+    if(flag0&&flag1&&flag2&&flag3&&flag4)
         return true;
     else {cleanAll(); return false;}
 }
 
-void Info::save(QXmlStreamWriter &writer)
+void Info::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("Info");
 
@@ -354,7 +361,7 @@ void Info::save(QXmlStreamWriter &writer)
     writer.writeTextElement("Team", team);
     writer.writeTextElement("Description", description);
     writer.writeTextElement("CreatedTime", createdtime.toString("yyyy.MM.dd hh:mm:ss.zzz"));
-    modifiedtime.save(writer);
+    modifiedtime.saveXml(writer);
 
     writer.writeEndElement();
 }
@@ -367,18 +374,18 @@ Project::~Project()
 
 void Project::cleanAll()
 {
-    info.clearAll();
+    info.cleanAll();
     for(int i=0;i<components.length();i++) delete components[i];
     components.clear();
     for(int i=0;i<features.length();i++) delete features[i];
     features.clear();
-    orthplan.clearAll();
-    senstable.clearAll();
+    orthplan.cleanAll();
+    senstable.cleanAll();
 }
 
-bool Project::load(QXmlStreamReader &reader)
+bool Project::loadXml(QXmlStreamReader &reader)
 {
-    bool flag0=false; bool flag3=false;
+    bool flag0=false; bool flag3=false; bool flag4=false;
     cleanAll();
 
     if(reader.isEndElement()) return false;
@@ -388,7 +395,7 @@ bool Project::load(QXmlStreamReader &reader)
             if(reader.name()=="Info") {
                 if(flag0) {flag0=false;break;}
                 flag0=true;
-                if(!info.load(reader)) {
+                if(!info.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -396,7 +403,7 @@ bool Project::load(QXmlStreamReader &reader)
             }
             else if(reader.name()=="Component") {
                 Component *p=new Component();
-                if(p->load(reader))
+                if(p->loadXml(reader))
                     components.append(p);
                 else {
                     delete p;
@@ -407,7 +414,7 @@ bool Project::load(QXmlStreamReader &reader)
             }
             else if(reader.name()=="Feature") {
                 Feature *p=new Feature();
-                if(p->load(reader))
+                if(p->loadXml(reader))
                     features.append(p);
                 else {
                     delete p;
@@ -419,7 +426,7 @@ bool Project::load(QXmlStreamReader &reader)
             else if(reader.name()=="Orthplan") {
                 if(flag3) {flag3=false;break;}
                 flag3=true;
-                if(!orthplan.load(reader)) {
+                if(!orthplan.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -428,7 +435,7 @@ bool Project::load(QXmlStreamReader &reader)
             else if(reader.name()=="Senstable") {
                 if(flag4) {flag4=false;break;}
                 flag4=true;
-                if(!senstable.load(reader)) {
+                if(!senstable.loadXml(reader)) {
                     cleanAll();
                     return false;
                 }
@@ -439,23 +446,23 @@ bool Project::load(QXmlStreamReader &reader)
         else reader.readNext();
     }
 
-    if(flag0&&flag3)
+    if(flag0&&flag3&&flag4)
         return true;
     else {cleanAll(); return false;}
 }
 
-void Project::save(QXmlStreamWriter &writer)
+void Project::saveXml(QXmlStreamWriter &writer)
 {
     writer.writeStartElement("Project");
 
-    info.save(writer);
+    info.saveXml(writer);
     for(int i=0;i<components.length();i++)
-        components[i]->save(writer);
+        components[i]->saveXml(writer);
     for(int i=0;i<features.length();i++)
-        features[i]->save(writer);
-    orthplan.save(writer);
+        features[i]->saveXml(writer);
+    orthplan.saveXml(writer);
     writer.writeStartElement("Senstable");
-    senstable.save(writer);
+    senstable.saveXml(writer);
     writer.writeEndElement();
 
     writer.writeEndElement();

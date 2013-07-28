@@ -24,13 +24,13 @@ public:
     ZtTable* Components() {return &components;}
     ZtTable* Features() {return &features;}
     int statusLength() const {return status.length();}
-    bool statusAt(int i) const {if(i>=0 && i<status.length()) return status[i]; else return 0;}
+    bool statusAt(int i) const {if(i>=0 && i<status.length()) return status[i]; else return false;}
     bool delStatus(int i) {if(i>=0 && i<status.length()) {status.removeAt(i);return true;} else return false;}
     bool changeStatus(int i, bool _n) {if(i>=0 && i<status.length()) {status[i]=_n;return true;} else return false;}
     void addStatus(bool _n) {status.append(_n);}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 class Feature {
@@ -51,8 +51,8 @@ public:
     QString Description() const {return description;}
     void setDescription(const QString &_n) {description=_n;}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 class Component {
@@ -76,8 +76,8 @@ public:
     QString Description() const {return description;}
     void setDescription(const QString &_n) {description=_n;}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 class ModifiedTime {
@@ -98,8 +98,8 @@ public:
     QDateTime Sens() const {return sens;}
     void setSens(const QDateTime &_n) {sens=_n;}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 class Info {
@@ -122,8 +122,8 @@ public:
     void setCreatedTime(const QDateTime &_n) {createdtime=_n;}
     ModifiedTime* ModifiedTime_data() {return &modifiedtime;}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 class Project {
@@ -148,8 +148,8 @@ public:
     Orthplan* Orthplan_data() {return &orthplan;}
     ZtTable* Senstable() {return &senstable;}
     void cleanAll();
-    bool load(QXmlStreamReader &reader);
-    void save(QXmlStreamWriter &writer);
+    bool loadXml(QXmlStreamReader &reader);
+    void saveXml(QXmlStreamWriter &writer);
 };
 
 #endif
