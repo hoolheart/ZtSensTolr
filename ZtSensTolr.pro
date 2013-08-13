@@ -15,11 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     tolrdata.cpp \
-    ZtTable.cpp
+    ZtTable.cpp \
+    datamodel.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
-    ZtTable.h
+    ZtTable.h \
+    datamodel.h \
+    ztlogger.h
 
 FORMS    += mainwindow.ui
 
