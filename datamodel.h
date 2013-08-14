@@ -3,16 +3,21 @@
 #include <QString>
 #include "tolrdata.h"
 #include "ztlogger.h"
+#include "ZtTable.h"
 
-class DataModel
+class DataModel : public QObject
 {
     Q_OBJECT
 
 private:
     Project *dat;
     bool isLoad, isModified;
+
 public:
     ZtLogger logger;
+    ZtTable components;
+
+public:
     DataModel();
     ~DataModel();
 
@@ -22,9 +27,12 @@ public:
 
     // actions
     // for components
+    int checkComponentIdExisted(QString _id);
     bool addComponent(QString _id, QString _name, double _value, QString _unit="", QString _des="");
     bool modifyComponent(QString id, QString attr, QString value);
     bool deleteComponent(QString id);
+    void updateComponents();
+    bool generateOrthogonalTable();
 };
 
 #endif // DATAMODEL_H

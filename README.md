@@ -1,10 +1,9 @@
 # ZtSensTolr
-------------
 
 A program to perform the sensitivity and tolerance analysis.
 
 ### Data Structure v0.0.1
----- June 27th, 2013
+> Date: June 27th, 2013
 
 	Project:complex
 	    Info:complex
@@ -34,12 +33,12 @@ A program to perform the sensitivity and tolerance analysis.
 	    Senstable:table
 
 ### Actions v0.0.1
----- July 28th,2013
+> Date: July 28th,2013
 
 _For components:_
 
 	bool addComponent(_id:string,_name:string,_value:double,_unit="":string,_des="":string);
 	bool modifyComponent(id:string,attr:string,value:string);
 	bool deleteComponent(id:string);
-	void convertComponents2Table();
+        void updateComponents();
 	bool generateOrthogonalTable();

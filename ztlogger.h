@@ -2,6 +2,7 @@
 #define ZTLOGGER_H
 #include <QString>
 #include <QQueue>
+#include <QDateTime>
 
 class ZtLog
 {
@@ -11,6 +12,7 @@ public:
     }LOG_TYPE;
     LOG_TYPE type;
     QString content;
+    QDateTime time;
 };
 
 class ZtLogger
@@ -21,6 +23,7 @@ private:
         ZtLog *log = new ZtLog();
         log->type = _t;
         log->content = _c;
+        log->time = QDateTime::currentDateTime();
         logger.enqueue(log);
     }
 
