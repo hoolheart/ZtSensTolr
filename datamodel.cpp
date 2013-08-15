@@ -93,7 +93,7 @@ bool DataModel::storeData(QString filename) {
     return true;
 }
 
-int DataModel::checkComponentIdExisted(QString _id) {
+int DataModel::checkComponentId(QString _id) {
     int i;
     for(i=0;i<dat->componentsLength();i++) {
         if (dat->componentsAt(i)->Id()==_id)
@@ -111,7 +111,7 @@ bool DataModel::addComponent(QString _id, QString _name, double _value, QString 
         return false;
     }
 
-    if(checkComponentIdExisted(_id)+1) {
+    if(checkComponentId(_id)+1) {
         logger.reportError(tr("Component Id ")+_id+tr(" has existed"));
         return false;
     }
@@ -129,10 +129,10 @@ bool DataModel::modifyComponent(QString id, QString attr, QString value) {
         return false;
     }
 
-    int i=checkComponentIdExisted(id);
+    int i=checkComponentId(id);
     if(i+1) {
         if (attr=="Id") {
-            if(checkComponentIdExisted(value)) {
+            if(checkComponentId(value)) {
                 logger.reportError(tr("Component Id ")+value+tr(" has existed"));
                 return false;
             }
@@ -169,7 +169,7 @@ bool DataModel::deleteComponent(QString id) {
         return false;
     }
 
-    int i=checkComponentIdExisted(id);
+    int i=checkComponentId(id);
     if(i+1) {
         dat->delComponent(i);
         isModified = true;
@@ -182,6 +182,11 @@ bool DataModel::deleteComponent(QString id) {
 }
 
 void DataModel::updateComponents() {
+    if(!isLoad) {
+        logger.reportWarning(tr("Attempt to show data before load"));
+        return;
+    }
+
     components.cleanAll();
     components.setHeader(QString("Id,Name,Value,Unit,Description").split(','));
     for(int i=0;i<dat->componentsLength();i++) {
@@ -196,6 +201,169 @@ void DataModel::updateComponents() {
     }
 }
 
+int DataModel::checkFeatureId(QString _id) {
+    int i;
+    for(i=0;i<dat->featuresLength();i++) {
+        if (dat->featuresAt(i)->Id()==_id)
+            break;
+    }
+    if (i<dat->featuresLength())
+        return i;
+    else
+        return -1;
+}
+
+bool DataModel::addFeature(QString _id, QString _name, QString _unit, QString _des) {
+    if(!isLoad) {
+        logger.reportError(tr("Attempt to modify before load"));
+        return false;
+    }
+
+    if(checkFeatureId(_id)+1) {
+        logger.reportError(tr("Feature Id ")+_id+tr(" has existed"));
+        return false;
+    }
+    Feature *f = new Feature();
+    f->setId(_id); f->setName(_name); f->setUnit(_unit); f->setDescription(_des);
+    dat->addFeature(f);
+
+    isModified = true;
+    return true;
+}
+
+bool DataModel::modifyFeature(QString id, QString attr, QString value) {
+    if(!isLoad) {
+        logger.reportError(tr("Attempt to modify before load"));
+        return false;
+    }
+
+    int i=checkFeatureId(id);
+    if(i+1) {
+        if (attr=="Id") {
+            if(checkFeatureId(value)) {
+                logger.reportError(tr("Feature Id ")+value+tr(" has existed"));
+                return false;
+            }
+            dat->featuresAt(i)->setId(value);
+        }
+        else if (attr=="Name") {
+            dat->featuresAt(i)->setName(value);
+        }
+        else if (attr=="Unit") {
+            dat->featuresAt(i)->setUnit(value);
+        }
+        else if (attr=="Description") {
+            dat->featuresAt(i)->setDescription(value);
+        }
+        else {
+            logger.reportError(tr("Features have no such attribute as ")+attr);
+            return false;
+        }
+        isModified = true;
+        return true;
+    }
+    else {
+        logger.reportError(tr("Feature Id ")+id+tr(" does not exist"));
+        return false;
+    }
+}
+
+bool DataModel::deleteFeature(QString id) {
+    if(!isLoad) {
+        logger.reportError(tr("Attempt to modify before load"));
+        return false;
+    }
+
+    int i=checkFeatureId(id);
+    if(i+1) {
+        dat->delFeature(i);
+        isModified = true;
+        return true;
+    }
+    else {
+        logger.reportError(tr("Feature Id ")+id+tr(" does not exist"));
+        return false;
+    }
+}
+
+void DataModel::updateFeatures() {
+    if(!isLoad) {
+        logger.reportWarning(tr("Attempt to show data before load"));
+        return;
+    }
+
+    features.cleanAll();
+    features.setHeader(QString("Id,Name,Unit,Description").split(','));
+    for(int i=0;i<dat->featuresLength();i++) {
+        Feature *f = dat->featuresAt(i);
+        QStringList r;
+        r.append(f->Id());
+        r.append(f->Name());
+        r.append(f->Unit());
+        r.append(f->Description());
+        features.addRow(r);
+    }
+}
+
 bool DataModel::generateOrthogonalTable() {
     return false;
+}
+
+bool DataModel::fillOrthogonalExpriment(int i, QStringList values) {
+    if(!isLoad) {
+        logger.reportError(tr("Attempt to modify before load"));
+        return false;
+    }
+
+    if(i<0 || i>=dat->Orthplan_data()->Components()->rowsLength()) {
+        logger.reportError(tr("The index ")+QString::number(i)+tr(" does not exist"));
+        return false;
+    }
+
+    if(values.length()!=dat->Orthplan_data()->Features()->Header().length()) {
+        logger.reportError(tr("The number of results do not match the number of features"));
+        return false;
+    }
+
+    dat->Orthplan_data()->Features()->changeRow(i,values);
+    return true;
+}
+
+bool DataModel::clearOrthogonalExpriment(int i) {
+    if(!isLoad) {
+        logger.reportError(tr("Attempt to modify before load"));
+        return false;
+    }
+
+    if(i<0 || i>=dat->Orthplan_data()->Components()->rowsLength()) {
+        logger.reportError(tr("The index ")+QString::number(i)+tr(" does not exist"));
+        return false;
+    }
+
+    QStringList r;
+    for(int k=0;k<dat->Orthplan_data()->Features()->Header().length();k++)
+        r.append(tr(""));
+    dat->Orthplan_data()->Features()->changeRow(i,r);
+    return true;
+}
+
+void DataModel::updateOrthogonalTable() {
+    if(!isLoad) {
+        logger.reportWarning(tr("Attempt to show data before load"));
+        return;
+    }
+
+    orthogonalTable.cleanAll();
+    QStringList t;
+    t.append(tr("Index"));
+    t.append(dat->Orthplan_data()->Components()->Header());
+    t.append(dat->Orthplan_data()->Features()->Header());
+    orthogonalTable.setHeader(t);
+    for(int i=0;i<dat->Orthplan_data()->Components()->rowsLength();i++) {
+        t.clear();
+        t.append(QString::number(i+1));
+        t.append(dat->Orthplan_data()->Components()->rowsAt(i));
+        t.append(dat->Orthplan_data()->Features()->rowsAt(i));
+        orthogonalTable.addRow(t);
+    }
 }

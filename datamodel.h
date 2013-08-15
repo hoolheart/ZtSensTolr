@@ -16,6 +16,8 @@ private:
 public:
     ZtLogger logger;
     ZtTable components;
+    ZtTable features;
+    ZtTable orthogonalTable;
 
 public:
     DataModel();
@@ -27,12 +29,22 @@ public:
 
     // actions
     // for components
-    int checkComponentIdExisted(QString _id);
+    int checkComponentId(QString _id);
     bool addComponent(QString _id, QString _name, double _value, QString _unit="", QString _des="");
     bool modifyComponent(QString id, QString attr, QString value);
     bool deleteComponent(QString id);
     void updateComponents();
+    //for features
+    int checkFeatureId(QString _id);
+    bool addFeature(QString _id, QString _name, QString _unit="", QString _des="");
+    bool modifyFeature(QString id, QString attr, QString value);
+    bool deleteFeature(QString id);
+    void updateFeatures();
+    // for orthogonal table
     bool generateOrthogonalTable();
+    bool fillOrthogonalExpriment(int i, QStringList values);
+    bool clearOrthogonalExpriment(int i);
+    void updateOrthogonalTable();
 };
 
 #endif // DATAMODEL_H
