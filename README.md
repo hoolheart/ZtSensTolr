@@ -57,3 +57,8 @@ _For orthogonal table:_
     bool fillOrthogonalExpriment(i:int,values:string_list);
     bool clearOrthogonalExpriment(i:int);
     void updateOrthogonalTable();
+
+### Table View
+> Date: August 24th, 2013
+
+Based on the data-oriented structure, the class *TableView* only concerns the related data and shows it properly.

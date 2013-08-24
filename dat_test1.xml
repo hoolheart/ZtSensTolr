@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project>
+    <Info>
+        <Name>Test1</Name>
+        <Team>Edward</Team>
+        <Description>testing data</Description>
+        <CreatedTime>2013.08.24 19:48:00.000</CreatedTime>
+        <ModifiedTime>
+            <Component>2013.08.24 19:49:00.000</Component>
+            <Feature>2013.08.24 19:49:00.000</Feature>
+            <Orth>2013.08.24 19:49:00.000</Orth>
+            <Sens>2013.08.24 19:49:00.000</Sens>
+        </ModifiedTime>
+    </Info>
+    <Component>
+        <Id>R1</Id>
+        <Name>upper feedback resistance</Name>
+        <Value>100</Value>
+        <Unit>ohm</Unit>
+        <Description>upper resistance for measuring the output voltage</Description>
+    </Component>
+    <Component>
+        <Id>R2</Id>
+        <Name>lower feedback resistance</Name>
+        <Value>1</Value>
+        <Unit>ohm</Unit>
+        <Description>lower resistance for measuring the output voltage</Description>
+    </Component>
+    <Feature>
+        <Id>Uo</Id>
+        <Name>output voltage</Name>
+        <Unit>volt</Unit>
+        <Description>output voltage (desired value 32V)</Description>
+    </Feature>
+    <Feature>
+        <Id>Io</Id>
+        <Name>output current</Name>
+        <Unit>amp</Unit>
+        <Description>output current (desired value 5A)</Description>
+    </Feature>
+    <Orthplan>
+        <Components>
+            <Header>R1,R2</Header>
+            <Row>100,1.01</Row>
+            <Row>99,1.01</Row>
+            <Row>101,0.99</Row>
+        </Components>
+        <Features>
+            <Header>Uo,Io</Header>
+            <Row>31.5,4.89</Row>
+            <Row>,</Row>
+            <Row>,</Row>
+        </Features>
+        <Status>1</Status>
+        <Status>0</Status>
+        <Status>0</Status>
+    </Orthplan>
+    <Senstable>
+        <Header>Component,Uo,Io</Header>
+        <Row>R1,,</Row>
+        <Row>R2,,</Row>
+    </Senstable>
+</Project>

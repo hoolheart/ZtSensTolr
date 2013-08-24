@@ -12,6 +12,7 @@ class DataModel : public QObject
 private:
     Project *dat;
     bool isLoad, isModified;
+    QString fileName;
 
 public:
     ZtLogger logger;
@@ -22,6 +23,9 @@ public:
 public:
     DataModel();
     ~DataModel();
+    QString FileName() const {return fileName;}
+    bool IsLoad() const {return isLoad;}
+    bool IsModified() const {return isModified;}
 
     // load or store the data form or to file
     bool loadData(QString filename);

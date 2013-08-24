@@ -16,13 +16,15 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     tolrdata.cpp \
     ZtTable.cpp \
-    datamodel.cpp
+    datamodel.cpp \
+    tableview.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
     ZtTable.h \
     datamodel.h \
-    ztlogger.h
+    ztlogger.h \
+    tableview.h
 
 FORMS    += mainwindow.ui
 

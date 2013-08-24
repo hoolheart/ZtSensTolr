@@ -6,7 +6,8 @@
 
 DataModel::DataModel() {
     isLoad = false;
-    isModified = true;
+    isModified = false;
+    fileName = QString();
 }
 
 DataModel::~DataModel() {
@@ -60,6 +61,7 @@ bool DataModel::loadData(QString filename) {
             delete dat;
         dat = _dat;
         isLoad = true;
+        fileName = filename;
         return true;
     }
 }
@@ -355,13 +357,13 @@ void DataModel::updateOrthogonalTable() {
 
     orthogonalTable.cleanAll();
     QStringList t;
-    t.append(tr("Index"));
+//    t.append(tr("Index"));
     t.append(dat->Orthplan_data()->Components()->Header());
     t.append(dat->Orthplan_data()->Features()->Header());
     orthogonalTable.setHeader(t);
     for(int i=0;i<dat->Orthplan_data()->Components()->rowsLength();i++) {
         t.clear();
-        t.append(QString::number(i+1));
+//        t.append(QString::number(i+1));
         t.append(dat->Orthplan_data()->Components()->rowsAt(i));
         t.append(dat->Orthplan_data()->Features()->rowsAt(i));
         orthogonalTable.addRow(t);
