@@ -17,16 +17,19 @@ SOURCES += main.cpp\
     tolrdata.cpp \
     ZtTable.cpp \
     datamodel.cpp \
-    tableview.cpp
+    tableview.cpp \
+    createprodialog.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
     ZtTable.h \
     datamodel.h \
     ztlogger.h \
-    tableview.h
+    tableview.h \
+    createprodialog.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    createprodialog.ui
 
 OTHER_FILES += \
     README.md \

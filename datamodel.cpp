@@ -15,6 +15,26 @@ DataModel::~DataModel() {
         delete dat;
 }
 
+void DataModel::createData(QString name, QString team, QString des, QString filename) {
+    Project *_dat = new Project();
+    _dat->Info_data()->setName(name);
+    _dat->Info_data()->setTeam(team);
+    _dat->Info_data()->setDescription(des);
+    QDateTime d = QDateTime::currentDateTime();
+    _dat->Info_data()->setCreatedTime(d);
+    _dat->Info_data()->ModifiedTime_data()->setComponent(d);
+    _dat->Info_data()->ModifiedTime_data()->setFeature(d);
+    _dat->Info_data()->ModifiedTime_data()->setSens(d);
+    _dat->Info_data()->ModifiedTime_data()->setOrth(d);
+
+    if (isLoad)
+        delete dat;
+    dat = _dat;
+    isLoad = true;
+    isModified = true;
+    fileName = filename;
+}
+
 bool DataModel::loadData(QString filename) {
     if(!QFile::exists(filename)) {
         logger.reportError(tr("File ")+filename+tr(" does not exist"));
@@ -61,9 +81,19 @@ bool DataModel::loadData(QString filename) {
             delete dat;
         dat = _dat;
         isLoad = true;
+        isModified = false;
         fileName = filename;
         return true;
     }
+}
+
+bool DataModel::saveData() {
+    if(storeData(fileName)) {
+        isModified = false;
+        return true;
+    }
+    else
+        return false;
 }
 
 bool DataModel::storeData(QString filename) {
@@ -91,8 +121,22 @@ bool DataModel::storeData(QString filename) {
                            +tr(" with error code ")+QString::number(file.error()));
         return false;
     }
-    isModified = false;
+//    isModified = false;
     return true;
+}
+
+bool DataModel::changeLocation(QString filename) {
+    if (storeData(filename)) {
+        fileName = filename;
+        isModified = false;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool DataModel::saveCopy(QString filename) {
+    return storeData(filename);
 }
 
 int DataModel::checkComponentId(QString _id) {
@@ -105,6 +149,12 @@ int DataModel::checkComponentId(QString _id) {
         return i;
     else
         return -1;
+}
+
+void DataModel::updateAll() {
+    updateComponents();
+    updateFeatures();
+    updateOrthogonalTable();
 }
 
 bool DataModel::addComponent(QString _id, QString _name, double _value, QString _unit, QString _des) {

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Project>
     <Info>
         <Name>Test1</Name>
@@ -51,9 +51,9 @@
             <Row>,</Row>
             <Row>,</Row>
         </Features>
-        <Status>1</Status>
-        <Status>0</Status>
-        <Status>0</Status>
+        <Status>True</Status>
+        <Status>False</Status>
+        <Status>False</Status>
     </Orthplan>
     <Senstable>
         <Header>Component,Uo,Io</Header>

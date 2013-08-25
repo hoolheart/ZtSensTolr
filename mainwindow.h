@@ -5,6 +5,7 @@
 #include <QSplitter>
 #include <QTreeWidget>
 #include <QTabWidget>
+#include <QCloseEvent>
 #include "datamodel.h"
 #include "tableview.h"
 
@@ -27,9 +28,23 @@ private:
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+    bool createFile();
+    bool openFile();
+    void refresh();
     
+private slots:
+    void on_actionNew_triggered();
+    void on_actionOpen_triggered();
+    void on_actionSave_triggered();
+    void on_actionSaveAs_triggered();
+    void on_actionSave_copy_as_triggered();
+    void on_actionQuit_triggered();
+
 private:
     Ui::MainWindow *ui;
+
+protected:
+    virtual void closeEvent ( QCloseEvent * event );
 };
 
 #endif // MAINWINDOW_H

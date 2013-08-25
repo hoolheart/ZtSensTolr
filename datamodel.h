@@ -27,11 +27,18 @@ public:
     bool IsLoad() const {return isLoad;}
     bool IsModified() const {return isModified;}
 
-    // load or store the data form or to file
+    // create, load or store the data form or to file
+    void createData(QString name, QString team, QString des, QString filename);
     bool loadData(QString filename);
+    bool saveData();
+    bool changeLocation(QString filename);
+    bool saveCopy(QString filename);
+private:
     bool storeData(QString filename);
 
+public:
     // actions
+    void updateAll();
     // for components
     int checkComponentId(QString _id);
     bool addComponent(QString _id, QString _name, double _value, QString _unit="", QString _des="");
