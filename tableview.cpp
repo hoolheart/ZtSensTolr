@@ -5,14 +5,17 @@ TableView::TableView(ZtTable *_dat, QWidget *parent):QTableWidget((QWidget *)par
     type = 0;
     dat = _dat;
 
-    setColumnCount(dat->Header().length());
-    setHorizontalHeaderLabels(dat->Header());
+//    setColumnCount(dat->Header().length());
+//    setHorizontalHeaderLabels(dat->Header());
 
     setWindowModified(false);
     refresh();
 }
 
 void TableView::refresh() {
+    setColumnCount(dat->Header().length());
+    setHorizontalHeaderLabels(dat->Header());
+
     for(int i=rowCount();i>0;i--)
         removeRow(i-1);
 

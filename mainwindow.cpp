@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include "createprodialog.h"
+#include "startupdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -18,8 +19,8 @@ MainWindow::MainWindow(QWidget *parent) :
     central->addWidget(tabs);
     setCentralWidget(central);
 
-    dat.loadData(QString("E:\\Design\\GitHut\\ZtSensTolr\\dat_test1.tol"));
-    dat.updateAll();
+//    dat.loadData(QString("E:\\Design\\GitHut\\ZtSensTolr\\dat_test1.tol"));
+//    dat.updateAll();
     comView = new TableView(&dat.components,this);
     feaView = new TableView(&dat.features,this);
     orthView = new TableView(&dat.orthogonalTable,this);
@@ -36,6 +37,16 @@ MainWindow::~MainWindow()
     delete comView; delete feaView; delete orthView;
     delete tabs;
     delete central;
+}
+
+bool MainWindow::startup() {
+    StartupDialog d(this);
+    if (d.exec()==QDialog::Accepted) {
+        refresh();
+        return true;
+    }
+    else
+        return false;
 }
 
 bool MainWindow::createFile() {

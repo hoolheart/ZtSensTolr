@@ -31,6 +31,7 @@ public:
     bool createFile();
     bool openFile();
     void refresh();
+    bool startup();
     
 private slots:
     void on_actionNew_triggered();
