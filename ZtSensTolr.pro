@@ -19,7 +19,8 @@ SOURCES += main.cpp\
     datamodel.cpp \
     tableview.cpp \
     createprodialog.cpp \
-    startupdialog.cpp
+    startupdialog.cpp \
+    addcomponentdialog.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
@@ -28,11 +29,13 @@ HEADERS  += mainwindow.h \
     ztlogger.h \
     tableview.h \
     createprodialog.h \
-    startupdialog.h
+    startupdialog.h \
+    addcomponentdialog.h
 
 FORMS    += mainwindow.ui \
     createprodialog.ui \
-    startupdialog.ui
+    startupdialog.ui \
+    addcomponentdialog.ui
 
 OTHER_FILES += \
     README.md \
