@@ -20,7 +20,8 @@ SOURCES += main.cpp\
     tableview.cpp \
     createprodialog.cpp \
     startupdialog.cpp \
-    addcomponentdialog.cpp
+    addcomponentdialog.cpp \
+    componentdialog.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
@@ -30,12 +31,14 @@ HEADERS  += mainwindow.h \
     tableview.h \
     createprodialog.h \
     startupdialog.h \
-    addcomponentdialog.h
+    addcomponentdialog.h \
+    componentdialog.h
 
 FORMS    += mainwindow.ui \
     createprodialog.ui \
     startupdialog.ui \
-    addcomponentdialog.ui
+    addcomponentdialog.ui \
+    componentdialog.ui
 
 OTHER_FILES += \
     README.md \
