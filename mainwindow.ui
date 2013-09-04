@@ -45,7 +45,17 @@
     </property>
     <addaction name="action_About"/>
    </widget>
+   <widget class="QMenu" name="menu_Components">
+    <property name="title">
+     <string>&amp;Components</string>
+    </property>
+    <addaction name="action_Add"/>
+    <addaction name="action_Show"/>
+    <addaction name="separator"/>
+    <addaction name="action_Delete"/>
+   </widget>
    <addaction name="menuProject"/>
+   <addaction name="menu_Components"/>
    <addaction name="menu_Help"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
@@ -111,6 +121,21 @@
    </property>
    <property name="toolTip">
     <string>Save a copy of current project</string>
+   </property>
+  </action>
+  <action name="action_Add">
+   <property name="text">
+    <string>&amp;Add</string>
+   </property>
+  </action>
+  <action name="action_Show">
+   <property name="text">
+    <string>&amp;Show</string>
+   </property>
+  </action>
+  <action name="action_Delete">
+   <property name="text">
+    <string>&amp;Delete</string>
    </property>
   </action>
  </widget>
