@@ -21,7 +21,8 @@ SOURCES += main.cpp\
     createprodialog.cpp \
     startupdialog.cpp \
     addcomponentdialog.cpp \
-    componentdialog.cpp
+    componentdialog.cpp \
+    stmath.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
@@ -32,7 +33,8 @@ HEADERS  += mainwindow.h \
     createprodialog.h \
     startupdialog.h \
     addcomponentdialog.h \
-    componentdialog.h
+    componentdialog.h \
+    stmath.h
 
 FORMS    += mainwindow.ui \
     createprodialog.ui \

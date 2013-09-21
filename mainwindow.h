@@ -40,6 +40,8 @@ private slots:
     void on_actionSaveAs_triggered();
     void on_actionSave_copy_as_triggered();
     void on_actionQuit_triggered();
+    //testing slots
+    void on_actionGOrth_triggered();
 
 private:
     Ui::MainWindow *ui;

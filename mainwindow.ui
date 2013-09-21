@@ -54,9 +54,16 @@
     <addaction name="separator"/>
     <addaction name="action_Delete"/>
    </widget>
+   <widget class="QMenu" name="menuTest">
+    <property name="title">
+     <string>Test</string>
+    </property>
+    <addaction name="actionGOrth"/>
+   </widget>
    <addaction name="menuProject"/>
    <addaction name="menu_Components"/>
    <addaction name="menu_Help"/>
+   <addaction name="menuTest"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -136,6 +143,11 @@
   <action name="action_Delete">
    <property name="text">
     <string>&amp;Delete</string>
+   </property>
+  </action>
+  <action name="actionGOrth">
+   <property name="text">
+    <string>GOrth</string>
    </property>
   </action>
  </widget>

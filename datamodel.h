@@ -4,6 +4,7 @@
 #include "tolrdata.h"
 #include "ztlogger.h"
 #include "ZtTable.h"
+#include "stmath.h"
 
 class DataModel : public QObject
 {
@@ -52,7 +53,7 @@ public:
     bool deleteFeature(QString id);
     void updateFeatures();
     // for orthogonal table
-    bool generateOrthogonalTable();
+    bool generateOrthogonalTable(int level, double err);
     bool fillOrthogonalExpriment(int i, QStringList values);
     bool clearOrthogonalExpriment(int i);
     void updateOrthogonalTable();

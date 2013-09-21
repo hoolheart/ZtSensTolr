@@ -4,6 +4,8 @@
 #include <QXmlStreamWriter>
 #include <QStringList>
 
+void fillTableByMat(ZtTable &table, MatData &dat);
+
 DataModel::DataModel() {
     isLoad = false;
     isModified = false;
@@ -357,8 +359,73 @@ void DataModel::updateFeatures() {
     }
 }
 
-bool DataModel::generateOrthogonalTable() {
-    return false;
+bool DataModel::generateOrthogonalTable(int level, double err) {
+    if(dat->componentsLength()<=0) {
+        logger.reportError(tr("No components to generate orthogonal table"));
+        return false;
+    }
+    else if(dat->featuresLength()<=0) {
+        logger.reportError(tr("No components to generate orthogonal table"));
+        return false;
+    }
+    MatData * comTable;
+    switch (level) {
+    case 2:
+        comTable = STMath::createOrthExpPlan(dat->componentsLength(),2);
+        break;
+    case 3:
+        comTable = STMath::createOrthExpPlan(dat->componentsLength(),3);
+        break;
+    default:
+        logger.reportError(tr("The level only can be 2 or 3"));
+        return false;
+    }
+
+    dat->Orthplan_data()->cleanAll();
+    QStringList comHeader;
+    for (int i=0;i<dat->componentsLength();i++) {
+        comHeader.append(dat->componentsAt(i)->Id());
+    }
+    dat->Orthplan_data()->Components()->setHeader(comHeader);
+    int n = comTable->n, m = comTable->m;
+    for (int j=0;j<m;j++) {
+        for (int i=0;i<n;i++) {
+            double v = dat->componentsAt(j)->Value();
+            double p = comTable->dat[i][j];
+            if (p==1)
+                comTable->dat[i][j] = v*(1-err);
+            else if (p==2)
+                comTable->dat[i][j] = v*(1+err);
+            else
+                comTable->dat[i][j] = v;
+        }
+    }
+    fillTableByMat(*dat->Orthplan_data()->Components(),*comTable);
+    delete comTable;
+
+    QStringList feaHeader;
+    for (int i=0;i<dat->featuresLength();i++)
+        feaHeader.append(dat->featuresAt(i)->Id());
+    dat->Orthplan_data()->Features()->setHeader(feaHeader);
+    MatData feaTable(n,dat->featuresLength());
+    feaTable.fill(0);
+    fillTableByMat(*dat->Orthplan_data()->Features(),feaTable);
+
+    for (int i=0;i<n;i++)
+        dat->Orthplan_data()->addStatus(false);
+
+    return true;
+}
+
+void fillTableByMat(ZtTable &table, MatData &dat) {
+    QStringList row;
+    for (int i=0;i<dat.n;i++) {
+        row.clear();
+        for (int j=0;j<dat.m;j++) {
+            row.append(QString::number(dat.dat[i][j]));
+        }
+        table.addRow(row);
+    }
 }
 
 bool DataModel::fillOrthogonalExpriment(int i, QStringList values) {

@@ -177,3 +177,9 @@ void MainWindow::on_actionOpen_triggered()
     if (openFile())
         refresh();
 }
+
+void MainWindow::on_actionGOrth_triggered()
+{
+    dat.generateOrthogonalTable(2,0.05);
+    refresh();
+}

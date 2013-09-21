@@ -124,7 +124,7 @@ void ComponentDialog::on_applyButton_clicked()
         }
     }
     if(ui->valueEdit->text().toDouble()!=value) {
-        if(dat->modifyComponent(id,tr("Value"),ui->valueEdit->text().toDouble())) {
+        if(dat->modifyComponent(id,tr("Value"),ui->valueEdit->text())) {
             value = ui->valueEdit->text().toDouble();
             ui->valueEdit->setText(QString::number(value));
             isModified = true;
