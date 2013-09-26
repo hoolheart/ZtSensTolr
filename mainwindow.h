@@ -40,6 +40,11 @@ private slots:
     void on_actionSaveAs_triggered();
     void on_actionSave_copy_as_triggered();
     void on_actionQuit_triggered();
+    void on_action_Show_Component_triggered();
+    void on_action_Delete_Component_triggered();
+    void on_doubleclick_component(QTableWidgetItem* item);
+    void on_show_component(int i);
+    void on_add_component();
     //testing slots
     void on_actionGOrth_triggered();
 

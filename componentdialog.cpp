@@ -13,6 +13,7 @@ ComponentDialog::ComponentDialog(const QStringList &component, DataModel *_dat, 
     value = component[2].toDouble();
     unit = component[3];
     des = component[4];
+    dat = _dat;
 
     ui->idEdit->setText(id);
     ui->nameEdit->setText(name);
@@ -168,7 +169,7 @@ void ComponentDialog::on_closeButton_clicked()
     checkAll();
     if(ui->applyButton->isEnabled()) {
         if(QMessageBox::question(this,this->windowTitle(),
-                              tr("There are modifications, do you want to close without applying them?"))\
+                              tr("There are modifications, do you want to close without applying them?"))
                 ==QMessageBox::No)
             return;
     }

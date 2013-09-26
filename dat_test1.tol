@@ -26,6 +26,13 @@
         <Unit>ohm</Unit>
         <Description>lower resistance for measuring the output voltage</Description>
     </Component>
+    <Component>
+        <Id>Co</Id>
+        <Name>output capacity</Name>
+        <Value>100</Value>
+        <Unit>uF</Unit>
+        <Description></Description>
+    </Component>
     <Feature>
         <Id>Uo</Id>
         <Name>output voltage</Name>

@@ -186,7 +186,7 @@ bool DataModel::modifyComponent(QString id, QString attr, QString value) {
     int i=checkComponentId(id);
     if(i+1) {
         if (attr=="Id") {
-            if(checkComponentId(value)) {
+            if(checkComponentId(value)+1) {
                 logger.reportError(tr("Component Id ")+value+tr(" has existed"));
                 return false;
             }
@@ -294,7 +294,7 @@ bool DataModel::modifyFeature(QString id, QString attr, QString value) {
     int i=checkFeatureId(id);
     if(i+1) {
         if (attr=="Id") {
-            if(checkFeatureId(value)) {
+            if(checkFeatureId(value)+1) {
                 logger.reportError(tr("Feature Id ")+value+tr(" has existed"));
                 return false;
             }

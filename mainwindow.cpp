@@ -4,6 +4,8 @@
 #include <QFileDialog>
 #include "createprodialog.h"
 #include "startupdialog.h"
+#include "addcomponentdialog.h"
+#include "componentdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,6 +30,9 @@ MainWindow::MainWindow(QWidget *parent) :
     tabs->addTab((QWidget *)comView,tr("Components"));
     tabs->addTab((QWidget *)feaView,tr("Features"));
     tabs->addTab((QWidget *)orthView,tr("Orthogonal Table"));
+
+    connect(comView,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(on_doubleclick_component(QTableWidgetItem*)));
+    connect(ui->action_Add_Component,SIGNAL(triggered()),this,SLOT(on_add_component()));
 }
 
 MainWindow::~MainWindow()
@@ -182,4 +187,60 @@ void MainWindow::on_actionGOrth_triggered()
 {
     dat.generateOrthogonalTable(2,0.05);
     refresh();
+}
+
+void MainWindow::on_doubleclick_component(QTableWidgetItem *item) {
+    int r = item->row();
+    if(r<0 || r>=dat.components.rowsLength())
+        on_add_component();
+    else
+        on_show_component(r);
+}
+
+void MainWindow::on_add_component() {
+    AddComponentDialog d(this);
+    if(d.exec()==QDialog::Accepted) {
+        if(dat.addComponent(d.id,d.name,d.value,d.unit,d.des)) {
+            refresh();
+        }
+        else {
+            ZtLog log;
+            dat.logger.pop(log);
+            QMessageBox::critical(this,tr("Failed to add component"),log.content);
+        }
+    }
+}
+
+void MainWindow::on_show_component(int i) {
+    if(i>=0&&i<dat.components.rowsLength()) {
+        ComponentDialog d(dat.components.rowsAt(i),&dat,this);
+        d.exec();
+        if(dat.IsModified())
+            refresh();
+    }
+}
+
+void MainWindow::on_action_Show_Component_triggered()
+{
+    QTableWidgetItem * item = comView->currentItem();
+    on_show_component(item->row());
+}
+
+void MainWindow::on_action_Delete_Component_triggered()
+{
+    QTableWidgetItem * item = comView->currentItem();
+    int i=item->row();
+    if(i>=0&&i<dat.components.rowsLength()) {
+        if(QMessageBox::question(this,this->windowTitle(),
+                                 tr("Do you want to delete the component \"")+dat.components.rowsAt(i)[0]+tr("\"?"))
+                ==QMessageBox::Yes) {
+            if(dat.deleteComponent(dat.components.rowsAt(i)[0]))
+                refresh();
+            else {
+                ZtLog log;
+                dat.logger.pop(log);
+                QMessageBox::critical(this,tr("Failed to delete component"),log.content);
+            }
+        }
+    }
 }
