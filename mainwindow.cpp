@@ -32,11 +32,23 @@ MainWindow::MainWindow(QWidget *parent) :
     tabs->addTab((QWidget *)comView,tr("Components"));
     tabs->addTab((QWidget *)feaView,tr("Features"));
     tabs->addTab((QWidget *)orthView,tr("Orthogonal Table"));
+    tabs->setCurrentWidget((QWidget *)comView);
+    controlActions();
+    connect(tabs,SIGNAL(currentChanged(int)),this,SLOT(controlActions()));
 
     connect(comView,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(on_doubleclick_component(QTableWidgetItem*)));
     connect(ui->action_Add_Component,SIGNAL(triggered()),this,SLOT(on_add_component()));
     connect(feaView,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(on_doubleclick_feature(QTableWidgetItem*)));
     connect(ui->action_Add_Feature,SIGNAL(triggered()),this,SLOT(on_add_feature()));
+
+    comView->addAction(ui->action_Add_Component);
+    comView->addAction(ui->action_Show_Component);
+    comView->addAction(ui->action_Delete_Component);
+    comView->setContextMenuPolicy(Qt::ActionsContextMenu);
+    feaView->addAction(ui->action_Add_Feature);
+    feaView->addAction(ui->action_Show_Feature);
+    feaView->addAction(ui->action_Delete_Feature);
+    feaView->setContextMenuPolicy(Qt::ActionsContextMenu);
 }
 
 MainWindow::~MainWindow()
@@ -52,6 +64,26 @@ void MainWindow::on_actionGOrth_triggered()
 {
     dat.generateOrthogonalTable(2,0.05);
     refresh();
+}
+
+void MainWindow::controlActions() {
+    int i = tabs->currentIndex();
+
+    // disable actions
+    ui->menu_Components->setEnabled(false);
+    ui->menu_Feature->setEnabled(false);
+
+    // enable available actions
+    switch (i) {
+    case 0:
+        ui->menu_Components->setEnabled(true);
+        break;
+    case 1:
+        ui->menu_Feature->setEnabled(true);
+        break;
+    default:
+        break;
+    }
 }
 
 bool MainWindow::startup() {

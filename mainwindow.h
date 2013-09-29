@@ -44,6 +44,7 @@ private slots:
     void on_action_Delete_Component_triggered();
     void on_action_Show_Feature_triggered();
     void on_action_Delete_Feature_triggered();
+    void controlActions();
     void on_doubleclick_component(QTableWidgetItem* item);
     void on_show_component(int i);
     void on_add_component();
