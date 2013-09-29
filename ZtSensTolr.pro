@@ -23,7 +23,8 @@ SOURCES += main.cpp\
     addcomponentdialog.cpp \
     componentdialog.cpp \
     stmath.cpp \
-    addfeaturedialog.cpp
+    addfeaturedialog.cpp \
+    featuredialog.cpp
 
 HEADERS  += mainwindow.h \
     tolrdata.h \
@@ -36,14 +37,16 @@ HEADERS  += mainwindow.h \
     addcomponentdialog.h \
     componentdialog.h \
     stmath.h \
-    addfeaturedialog.h
+    addfeaturedialog.h \
+    featuredialog.h
 
 FORMS    += mainwindow.ui \
     createprodialog.ui \
     startupdialog.ui \
     addcomponentdialog.ui \
     componentdialog.ui \
-    addfeaturedialog.ui
+    addfeaturedialog.ui \
+    featuredialog.ui
 
 OTHER_FILES += \
     README.md \

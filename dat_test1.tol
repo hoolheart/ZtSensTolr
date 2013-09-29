@@ -40,25 +40,34 @@
         <Description>output voltage (desired value 32V)</Description>
     </Feature>
     <Feature>
-        <Id>Io</Id>
+        <Id>Iout</Id>
         <Name>output current</Name>
         <Unit>amp</Unit>
         <Description>output current (desired value 5A)</Description>
     </Feature>
+    <Feature>
+        <Id>Ui</Id>
+        <Name>input voltage</Name>
+        <Unit>V</Unit>
+        <Description></Description>
+    </Feature>
     <Orthplan>
         <Components>
-            <Header>R1,R2</Header>
-            <Row>100,1.01</Row>
-            <Row>99,1.01</Row>
-            <Row>101,0.99</Row>
+            <Header>R1,R2,Co</Header>
+            <Row>95,0.95,95</Row>
+            <Row>95,1.05,105</Row>
+            <Row>105,0.95,105</Row>
+            <Row>105,1.05,95</Row>
         </Components>
         <Features>
-            <Header>Uo,Io</Header>
-            <Row>31.5,4.89</Row>
-            <Row>,</Row>
-            <Row>,</Row>
+            <Header>Uo,Iout,Ui</Header>
+            <Row>0,0,0</Row>
+            <Row>0,0,0</Row>
+            <Row>0,0,0</Row>
+            <Row>0,0,0</Row>
         </Features>
-        <Status>True</Status>
+        <Status>False</Status>
+        <Status>False</Status>
         <Status>False</Status>
         <Status>False</Status>
     </Orthplan>

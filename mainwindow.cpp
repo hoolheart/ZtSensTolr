@@ -6,6 +6,8 @@
 #include "startupdialog.h"
 #include "addcomponentdialog.h"
 #include "componentdialog.h"
+#include "addfeaturedialog.h"
+#include "featuredialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -33,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(comView,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(on_doubleclick_component(QTableWidgetItem*)));
     connect(ui->action_Add_Component,SIGNAL(triggered()),this,SLOT(on_add_component()));
+    connect(feaView,SIGNAL(itemDoubleClicked(QTableWidgetItem*)),this,SLOT(on_doubleclick_feature(QTableWidgetItem*)));
+    connect(ui->action_Add_Feature,SIGNAL(triggered()),this,SLOT(on_add_feature()));
 }
 
 MainWindow::~MainWindow()
@@ -42,6 +46,12 @@ MainWindow::~MainWindow()
     delete comView; delete feaView; delete orthView;
     delete tabs;
     delete central;
+}
+
+void MainWindow::on_actionGOrth_triggered()
+{
+    dat.generateOrthogonalTable(2,0.05);
+    refresh();
 }
 
 bool MainWindow::startup() {
@@ -183,12 +193,6 @@ void MainWindow::on_actionOpen_triggered()
         refresh();
 }
 
-void MainWindow::on_actionGOrth_triggered()
-{
-    dat.generateOrthogonalTable(2,0.05);
-    refresh();
-}
-
 void MainWindow::on_doubleclick_component(QTableWidgetItem *item) {
     int r = item->row();
     if(r<0 || r>=dat.components.rowsLength())
@@ -240,6 +244,55 @@ void MainWindow::on_action_Delete_Component_triggered()
                 ZtLog log;
                 dat.logger.pop(log);
                 QMessageBox::critical(this,tr("Failed to delete component"),log.content);
+            }
+        }
+    }
+}
+
+void MainWindow::on_doubleclick_feature(QTableWidgetItem *item) {
+    int r = item->row();
+    if(r>=0&&r<dat.features.rowsLength()) {
+        FeatureDialog d(dat.features.rowsAt(r),&dat,this);
+        d.exec();
+        if(dat.IsModified())
+            refresh();
+    }
+}
+
+void MainWindow::on_add_feature() {
+    AddFeatureDialog d(this);
+    if(d.exec()==QDialog::Accepted) {
+        if(dat.addFeature(d.id,d.name,d.unit,d.des)) {
+            refresh();
+        }
+        else {
+            ZtLog log;
+            dat.logger.pop(log);
+            QMessageBox::critical(this,tr("Failed to add feature"),log.content);
+        }
+    }
+}
+
+void MainWindow::on_action_Show_Feature_triggered()
+{
+    QTableWidgetItem * item = feaView->currentItem();
+    on_doubleclick_feature(item);
+}
+
+void MainWindow::on_action_Delete_Feature_triggered()
+{
+    QTableWidgetItem * item = feaView->currentItem();
+    int i=item->row();
+    if(i>=0&&i<dat.features.rowsLength()) {
+        if(QMessageBox::question(this,this->windowTitle(),
+                                 tr("Do you want to delete the feature \"")+dat.features.rowsAt(i)[0]+tr("\"?"))
+                ==QMessageBox::Yes) {
+            if(dat.deleteFeature(dat.features.rowsAt(i)[0]))
+                refresh();
+            else {
+                ZtLog log;
+                dat.logger.pop(log);
+                QMessageBox::critical(this,tr("Failed to delete feature"),log.content);
             }
         }
     }

@@ -10,7 +10,7 @@ AddFeatureDialog::AddFeatureDialog(QWidget *parent) :
 
     // parameters
     id = tr("F?"); ui->idEdit->setText(id);
-    name = tr("Component"); ui->nameEdit->setText(name);
+    name = tr("Feature"); ui->nameEdit->setText(name);
     unit = QString(); ui->unitEdit->setText(unit);
     des = QString(); ui->desEdit->setPlainText(des);
 }

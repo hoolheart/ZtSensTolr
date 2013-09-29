@@ -60,8 +60,18 @@
     </property>
     <addaction name="actionGOrth"/>
    </widget>
+   <widget class="QMenu" name="menu_Feature">
+    <property name="title">
+     <string>&amp;Feature</string>
+    </property>
+    <addaction name="action_Add_Feature"/>
+    <addaction name="action_Show_Feature"/>
+    <addaction name="separator"/>
+    <addaction name="action_Delete_Feature"/>
+   </widget>
    <addaction name="menuProject"/>
    <addaction name="menu_Components"/>
+   <addaction name="menu_Feature"/>
    <addaction name="menu_Help"/>
    <addaction name="menuTest"/>
   </widget>
@@ -143,7 +153,7 @@
     <string>&amp;Show</string>
    </property>
    <property name="toolTip">
-    <string>Show the current component</string>
+    <string>Show or modify the current component</string>
    </property>
   </action>
   <action name="action_Delete_Component">
@@ -157,6 +167,30 @@
   <action name="actionGOrth">
    <property name="text">
     <string>GOrth</string>
+   </property>
+  </action>
+  <action name="action_Add_Feature">
+   <property name="text">
+    <string>&amp;Add</string>
+   </property>
+   <property name="toolTip">
+    <string>Add a new feature</string>
+   </property>
+  </action>
+  <action name="action_Show_Feature">
+   <property name="text">
+    <string>&amp;Show</string>
+   </property>
+   <property name="toolTip">
+    <string>Show or modify the current feature</string>
+   </property>
+  </action>
+  <action name="action_Delete_Feature">
+   <property name="text">
+    <string>&amp;Delete</string>
+   </property>
+   <property name="toolTip">
+    <string>Delete the current feature</string>
    </property>
   </action>
  </widget>
